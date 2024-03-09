@@ -1,7 +1,11 @@
 package demo;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.checkerframework.checker.units.qual.s;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -48,9 +52,58 @@ public class TestCases {
     
     public  void testCase01(){
         System.out.println("Start Test case: testCase01");
-        driver.get("https://www.google.com");
+       driver.get("https://leetcode.com/ ");
+      String url = driver.getCurrentUrl();
+      if(url.contains("leetcode")){
+        System.out.println("Sucessfully navigated to leetcode ");
+      }
+        System.out.println("end Test case: testCase01");
+    }
+    public  void testCase02() throws InterruptedException{
+        System.out.println("Start Test case: testCase02");
+        WebElement questions = driver.findElement(By.xpath("//*[text()='View Questions ']"));
+        questions.click();
+        Thread.sleep(2000);
+        String problemUrl =driver.getCurrentUrl();
+        if(problemUrl.contains("problemset")){
+            System.out.println("Navigated to problems");
+        }
+
+        List<WebElement> listOfQues = driver.findElements(By.xpath("//div[@class=\"truncate\"]/a"));
+    //    for(WebElement list : listOfQues){
+    //     System.out.println(list.getText());
+    //    }
+        for(int i=1;i<=5;i++){
+         String ques =   listOfQues.get(i).getText();
+         System.out.println(ques);
+        }
+
         System.out.println("end Test case: testCase02");
     }
+    public  void testCase03(){
+        System.out.println("Start Test case: testCase03");
+        List<WebElement> listOfQues = driver.findElements(By.xpath("//div[@class=\"truncate\"]/a"));
+        
+            for(int i=1;i<2;i++){
+                String ques = listOfQues.get(i).getText();
+                System.out.println(ques);
+                listOfQues.get(i).click();
+           
+            }
+            String url =driver.getCurrentUrl();
+            if(url.contains("two-sum")){
+                System.out.println("Sucessfully navigated to Two Sum Problem");
+            }
+            System.out.println("end Test case: testCase03");
+    }
 
-
+    public  void testCase04(){
+        System.out.println("Start Test case: testCase04");
+        driver.findElement(By.id("submissions_tab")).click();
+       WebElement submissionsTab = driver.findElement(By.xpath("//a[contains(text(),'Register or Sign In')]"));
+       if(submissionsTab.getText().contains("Register or Sign In")){
+        System.out.println("SucessFully Validated Register Sign in Text");
+       }
+       System.out.println("end Test case: testCase04");
+    }
 }
